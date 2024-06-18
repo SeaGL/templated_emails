@@ -38,12 +38,28 @@ def send_email(to_email, subj, body):
 with open(args.filename) as csvfile:
     csvreader = csv.DictReader(csvfile)
 
-    #header = next(csvreader)
     for row in csvreader:
         org_name=row["Organization"]
         subj=org_name + " as a SeaGL 2024 Sponsor?"
+
+        # cascadia? returning?  result
+        # no        no          regular
+        # yes       no          cascadia
+        # no        yes         returning
+        # yes       yes         returning
+
+        use_local_template = True if len(row["Cascadia"]) > 0 else False
+        use_returning_template = True if len(row["Previous_Sponsor"]) > 0 else False
+
+        if use_returning_template:
+            template = "./SeaGL_2024_returning_sponsor_Template.html"
+        elif use_local_template:
+            template = "./SeaGL_2024_local_partner_Template.html"
+        else:
+            template = "./SeaGL_2024_Sponsor_Template.html"
+            
         send_template_email(
-            template='SeaGL_2024_Sponsor_Template.html',
+            template=template,
             to_email=row["Contact_Email"],
             subj=subj,
             CONTACT_FIRST_NAME=row["Contact_Name"],
