@@ -49,7 +49,7 @@ with open(args.filename) as csvfile:
         # yes       yes         returning
 
         use_local_template = True if len(row["Cascadia"]) > 0 else False
-        use_returning_template = True if len(row["Previous_Sponsor"]) > 0 else False
+        use_returning_template = True if len(row["Prev_Sponsor"]) > 0 else False
 
         if use_returning_template:
             template = "./SeaGL_2024_returning_sponsor_Template.html"
