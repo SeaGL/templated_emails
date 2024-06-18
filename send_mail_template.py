@@ -1,14 +1,14 @@
 import smtplib
+import csv
 
 from envs import SENDER_EMAIL, SENDER_PASSWORD
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-recipient_email = "partnerships@seagl.org"
-org_name="ORG NAME"
-subj=org_name + " as a SeaGL 2024 Sponsor?"
-contact_first_name="CONTACT FIRST NAME"
+# recipient_email = "partnerships@seagl.org"
+# org_name="ORG NAME"
+# contact_first_name="CONTACT FIRST NAME"
 SENDER_FIRST_NAME="SENDER FIRST NAME"
 
 def send_template_email(template, to_email, subj, **kwargs):
@@ -36,11 +36,17 @@ def send_email(to_email, subj, body):
 
     print("Email going to " + to_email + " has sent.")
 
-send_template_email(
-    template='SeaGL_2024_Sponsor_Template.html',
-    to_email=recipient_email,
-    subj=subj,
-    CONTACT_FIRST_NAME=contact_first_name,
-    SENDER_FIRST_NAME=SENDER_FIRST_NAME,
-    ORG_NAME=org_name
-)
+with open("./test.csv") as csvfile:
+    csvreader = csv.DictReader(csvfile)
+
+    header = next(csvreader)
+    for row in csvreader:
+        subj=org_name + " as a SeaGL 2024 Sponsor?"
+        send_template_email(
+            template='SeaGL_2024_Sponsor_Template.html',
+            to_email=row["Contact_Email"],
+            subj=subj,
+            CONTACT_FIRST_NAME=row["Contact_Name"],
+            SENDER_FIRST_NAME=SENDER_FIRST_NAME,
+            ORG_NAME=row["Organization"]
+        )
