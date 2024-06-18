@@ -1,2 +1,3 @@
 # templated_emails
-Repository for sending templated emails
+
+This repository holds the script and templates we use for sending out emails.
