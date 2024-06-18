@@ -1,2 +1,3 @@
 SENDER_EMAIL="user@example.com"
 SENDER_PASSWORD="password"
+SENDER_FIRST_NAME="NAME"

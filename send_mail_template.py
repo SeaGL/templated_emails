@@ -1,15 +1,17 @@
 import smtplib
 import csv
+import argparse
 
-from envs import SENDER_EMAIL, SENDER_PASSWORD
+from envs import SENDER_EMAIL, SENDER_PASSWORD, SENDER_FIRST_NAME
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-# recipient_email = "partnerships@seagl.org"
-# org_name="ORG NAME"
-# contact_first_name="CONTACT FIRST NAME"
-SENDER_FIRST_NAME="SENDER FIRST NAME"
+parser = argparse.ArgumentParser(prog="send_mail_template.py",
+    description="Sends an email based on template.")
+parser.add_argument('filename')
+args = parser.parse_args()
+print(args.filename)
 
 def send_template_email(template, to_email, subj, **kwargs):
     env = Environment(
@@ -20,9 +22,6 @@ def send_template_email(template, to_email, subj, **kwargs):
     template=env.get_template(template)
 
     send_email(to_email, subj, template.render(**kwargs))
-
-    #with open('email_template.html', 'r') as f:
-    #    template = Template(f.read())
 
 def send_email(to_email, subj, body):
     html_message = MIMEText(body, 'html')
@@ -36,11 +35,12 @@ def send_email(to_email, subj, body):
 
     print("Email going to " + to_email + " has sent.")
 
-with open("./test.csv") as csvfile:
+with open(args.filename) as csvfile:
     csvreader = csv.DictReader(csvfile)
 
-    header = next(csvreader)
+    #header = next(csvreader)
     for row in csvreader:
+        org_name=row["Organization"]
         subj=org_name + " as a SeaGL 2024 Sponsor?"
         send_template_email(
             template='SeaGL_2024_Sponsor_Template.html',
@@ -48,5 +48,5 @@ with open("./test.csv") as csvfile:
             subj=subj,
             CONTACT_FIRST_NAME=row["Contact_Name"],
             SENDER_FIRST_NAME=SENDER_FIRST_NAME,
-            ORG_NAME=row["Organization"]
+            ORG_NAME=org_name
         )
