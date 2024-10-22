@@ -1,6 +1,7 @@
 import smtplib
 import csv
 import argparse
+import re
 
 from envs import SENDER_EMAIL, SENDER_PASSWORD, SENDER_FIRST_NAME
 from email.mime.text import MIMEText
@@ -13,17 +14,22 @@ parser.add_argument('filename')
 args = parser.parse_args()
 print(args.filename)
 
+def is_invalid_email(email):
+    return not bool(re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', email))
+
+
 def csvCheck():
     print("\n Starting CSV data check... \n")
     #variable helps print which lines the errors are located in
-    i = 1
+    i = 2
     #if even one row has an issue, allGood will be False
     allGood = True
     with open('test.csv', 'r') as file: 
         data = csv.reader(file)
+        next(data)
         
-        for line in data:
-            if line[0]=="" or line[1]=="" or line[2]=="":
+        for line in data:                   #if contact_name or organization is empty/only has whitespaces
+            if is_invalid_email(line[2]) or line[0].strip()=="" or line[1].strip() == "":
                 #return False
                 print("Issue on line " + str(i))
                 allGood = False
