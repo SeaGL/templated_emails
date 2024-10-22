@@ -14,11 +14,17 @@ parser.add_argument('filename')
 args = parser.parse_args()
 print(args.filename)
 
+#returns True if invalid email
 def is_invalid_email(email):
-    return not bool(re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', email))
+
+    #The commented out line matches ANYTHING of the format x@seagl.y where y can be 'org' or 'com' or anything and len(y)>1
+    #return not bool(re.match(r'^[a-zA-Z0-9._%+-]+@seagl\.[a-zA-Z0-9]{2,}$', email))
+
+    #whereas this ONLY matches to x@seagl.org
+    return not bool(re.match(r'^[a-zA-Z0-9._%+-]+@seagl\.org$', email))
 
 
-def csvCheck():
+def csv_check():
     print("\n Starting CSV data check... \n")
     #variable helps print which lines the errors are located in
     i = 2
@@ -37,6 +43,7 @@ def csvCheck():
         print("\n Check complete.")
         #return True
         return allGood
+    
 
 def send_template_email(template, to_email, subj, **kwargs):
     env = Environment(
