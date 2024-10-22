@@ -13,6 +13,25 @@ parser.add_argument('filename')
 args = parser.parse_args()
 print(args.filename)
 
+def csvCheck():
+    print("\n Starting CSV data check... \n")
+    #variable helps print which lines the errors are located in
+    i = 1
+    #if even one row has an issue, allGood will be False
+    allGood = True
+    with open('test.csv', 'r') as file: 
+        data = csv.reader(file)
+        
+        for line in data:
+            if line[0]=="" or line[1]=="" or line[2]=="":
+                #return False
+                print("Issue on line " + str(i))
+                allGood = False
+            i+=1
+        print("\n Check complete.")
+        #return True
+        return allGood
+
 def send_template_email(template, to_email, subj, **kwargs):
     env = Environment(
         loader = FileSystemLoader('email_templates'),
