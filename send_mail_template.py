@@ -1,6 +1,7 @@
 import smtplib
 import csv
 import argparse
+import re
 
 from envs import SENDER_EMAIL, SENDER_PASSWORD, SENDER_FIRST_NAME
 from email.mime.text import MIMEText
@@ -12,6 +13,35 @@ parser = argparse.ArgumentParser(prog="send_mail_template.py",
 parser.add_argument('filename')
 args = parser.parse_args()
 print(args.filename)
+
+#returns True if invalid email
+def is_invalid_email(email):
+
+    #checks if email is of the format x@y.z
+    return not bool(re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', email))
+
+
+def csv_check():
+    print("\n Starting CSV data check... \n")
+    #variable helps print which lines the errors are located in
+    i = 2
+    #if even one row has an issue, allGood will be False
+    allGood = True
+    with open('test.csv', 'r') as file: 
+        data = csv.reader(file)
+        #to make the code start from line 2
+        next(data)
+        
+        for line in data:                   #if contact_name or organization is empty/only has whitespaces
+            if is_invalid_email(line[2]) or line[0].strip()=="" or line[1].strip() == "":
+                #return False
+                print("Issue on line " + str(i))
+                allGood = False
+            i+=1
+        print("\n Check complete.")
+        #return True
+        return allGood
+    
 
 def send_template_email(template, to_email, subj, **kwargs):
     env = Environment(
