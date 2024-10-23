@@ -17,11 +17,8 @@ print(args.filename)
 #returns True if invalid email
 def is_invalid_email(email):
 
-    #The commented out line matches ANYTHING of the format x@seagl.y where y can be 'org' or 'com' or anything and len(y)>1
-    #return not bool(re.match(r'^[a-zA-Z0-9._%+-]+@seagl\.[a-zA-Z0-9]{2,}$', email))
-
-    #whereas this ONLY matches to x@seagl.org
-    return not bool(re.match(r'^[a-zA-Z0-9._%+-]+@seagl\.org$', email))
+    #checks if email is of the format x@y.z
+    return not bool(re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', email))
 
 
 def csv_check():
@@ -32,6 +29,7 @@ def csv_check():
     allGood = True
     with open('test.csv', 'r') as file: 
         data = csv.reader(file)
+        #to make the code start from line 2
         next(data)
         
         for line in data:                   #if contact_name or organization is empty/only has whitespaces
