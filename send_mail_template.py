@@ -32,7 +32,7 @@ def send_email(to_email, subj, cc, body):
     html_message['To'] = to_email
     html_message['Cc'] = cc
 
-    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
+    with smtplib.SMTP_SSL('mail.seagl.org', 465) as server:
         server.login(SENDER_EMAIL, SENDER_PASSWORD)
         server.sendmail(SENDER_EMAIL, to_email, html_message.as_string())
 
@@ -47,6 +47,8 @@ with open(args.filename) as csvfile:
             subj=org_name + " as a SeaGL 2024 Sponsor?"
         elif (args.partner_type == "partner"):
             subj=org_name + " as a SeaGL 2024 Partner?"
+        elif (args.partner_type == "reminder"):
+            subj="Checking in about " + org_name + " as a SeaGL 2024 Partner?"
         else:
             print ("Warning: partner type incorrectly input or inexistent.")
             print ("Current checks are for..")
@@ -62,9 +64,14 @@ with open(args.filename) as csvfile:
 
         use_local_template = True if len(row["Cascadia"]) > 0 else False
         use_returning_template = True if len(row["Prev_Sponsor"]) > 0 else False
+        use_reminder_template = True if args.partner_type == "reminder" else False
 
-        if use_returning_template:
+        if use_reminder_template:
+            template = "./reminder_template.html"
+        elif use_returning_template:
             template = "./SeaGL_2024_returning_sponsor_Template.html"
+        elif use_local_template:
+            template = "./SeaGL_2024_local_partner_Template.html"
         elif use_local_template:
             template = "./SeaGL_2024_local_partner_Template.html"
         else:
