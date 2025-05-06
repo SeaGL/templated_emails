@@ -15,15 +15,17 @@ args = parser.parse_args()
 print(args.filename)
 print(args.partner_type)
 
-def send_template_email(template, to_email, subj, cc, **kwargs):
+def send_template_email(template, signature, to_email, subj, cc, **kwargs):
     env = Environment(
         loader = FileSystemLoader('email_templates'),
         autoescape = select_autoescape(['html', 'xml'])
     )
 
     template=env.get_template(template)
+    signature = env.get_template(signature)
+    template_with_sig = template + signature
 
-    send_email(to_email, subj, cc, template.render(**kwargs))
+    send_email(to_email, subj, cc, template_with_sig.render(**kwargs))
 
 def send_email(to_email, subj, cc, body):
     html_message = MIMEText(body, 'html')
@@ -77,10 +79,13 @@ with open(args.filename) as csvfile:
         else:
             template = "./sponsor_Template.html"
 
+        signature = "./signature_Template.html"
+
         cc_email="partnerships@seagl.org"
 
         send_template_email(
             template=template,
+            signature=signature,
             to_email=row["Contact_Email"],
             subj=subj,
             cc=cc_email,
