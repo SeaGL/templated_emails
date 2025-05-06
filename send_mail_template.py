@@ -23,11 +23,10 @@ def send_template_email(template, signature, to_email, subj, cc, **kwargs):
 
     template=env.get_template(template)
     signature = env.get_template(signature)
-    template_with_sig = template + signature
 
-    send_email(to_email, subj, cc, template_with_sig.render(**kwargs))
+    send_email(to_email, subj, cc, template.render(**kwargs),signature.render(**kwargs))
 
-def send_email(to_email, subj, cc, body):
+def send_email(to_email, subj, cc, body, signature):
     html_message = MIMEText(body, 'html')
     html_message['Subject'] = subj
     html_message['From'] = SENDER_EMAIL
