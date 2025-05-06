@@ -44,17 +44,17 @@ with open(args.filename) as csvfile:
     for row in csvreader:
         org_name=row["Organization"]
         if (args.partner_type == "sponsor"):
-            subj=org_name + " as a SeaGL 2024 Sponsor?"
+            subj=org_name + " as a SeaGL 2025 Sponsor?"
         elif (args.partner_type == "partner"):
-            subj=org_name + " as a SeaGL 2024 Partner?"
+            subj=org_name + " as a SeaGL 2025 Partner?"
         elif (args.partner_type == "reminder"):
-            subj="Checking in about " + org_name + " as a SeaGL 2024 Partner?"
+            subj="Checking in about " + org_name + " as a SeaGL 2025 Partner?"
         else:
             print ("Warning: partner type incorrectly input or inexistent.")
             print ("Current checks are for..")
             print (" - sponsor")
             print (" - partner")
-            
+
 
         # cascadia? returning?  result
         # no        no          regular
@@ -67,18 +67,18 @@ with open(args.filename) as csvfile:
         use_reminder_template = True if args.partner_type == "reminder" else False
 
         if use_reminder_template:
-            template = "./reminder_template.html"
+            template = "./reminder_Template.html"
         elif use_returning_template:
-            template = "./SeaGL_2024_returning_sponsor_Template.html"
+            template = "./returning_sponsor_Template.html"
         elif use_local_template:
-            template = "./SeaGL_2024_local_partner_Template.html"
+            template = "./local_partner_Template.html"
         elif use_local_template:
-            template = "./SeaGL_2024_local_partner_Template.html"
+            template = "./local_partner_Template.html"
         else:
-            template = "./SeaGL_2024_Sponsor_Template.html"
+            template = "./sponsor_Template.html"
 
         cc_email="partnerships@seagl.org"
-            
+
         send_template_email(
             template=template,
             to_email=row["Contact_Email"],
