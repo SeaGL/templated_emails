@@ -77,15 +77,16 @@ with open(args.filename) as csvfile:
         # use_returning_template = True if len(row["Prev_Sponsor"]) > 0 else False
         # use_reminder_template = True if args.partner_type == "reminder" else False
 
-        # if use_reminder_template:
-        #     template = "./reminder_Template.html"
+        # if use_keynote_reminder_template:
+        #     template = "./keynote_reminder_Template.html"
+        # elif use_month_before_reminder_template:
+        #     template = "./month_before_reminder_Template.html"
         # elif use_returning_template:
         #     template = "./returning_sponsor_Template.html"
         # elif use_local_template:
-        #     template = "./local_partner_Template.html"
-        # elif use_local_template:
-        #     template = "./local_partner_Template.html"
+        #     template = "./new_local_sponsor_Template.html"
         # else:
+        #     template = "./new_sponsor_Template.html"
         template = "./sponsor_Template.html"
 
         signature = "./signature_Template.html"
