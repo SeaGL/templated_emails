@@ -55,7 +55,7 @@ with open(args.filename) as csvfile:
     for row in csvreader:
         org_name=row["Organization"]
         if (args.partner_type == "sponsor"):
-            subj=org_name + " as a SeaGL 2025 Sponsor"
+            subj=org_name + " as a SeaGL 2025 Sponsor?"
         elif (args.partner_type == "partner"):
             subj=org_name + " as a SeaGL 2025 Partner?"
         elif (args.partner_type == "reminder"):
