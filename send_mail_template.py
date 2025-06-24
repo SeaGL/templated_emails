@@ -87,7 +87,7 @@ with open(args.filename) as csvfile:
         #     template = "./new_local_sponsor_Template.html"
         # else:
         #     template = "./new_sponsor_Template.html"
-        template = "./sponsor_Template.html"
+        template = "./keynote_reminder_Template.html"
 
         signature = "./signature_Template.html"
 
@@ -101,5 +101,6 @@ with open(args.filename) as csvfile:
             cc=cc_email,
             CONTACT_FIRST_NAME=row["Contact_Name"],
             SENDER_FIRST_NAME=SENDER_FIRST_NAME,
+            SENDER_EMAIL=SENDER_EMAIL,
             ORG_NAME=org_name
         )
