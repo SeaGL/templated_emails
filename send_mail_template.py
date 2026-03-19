@@ -55,11 +55,11 @@ with open(args.filename) as csvfile:
     for row in csvreader:
         org_name=row["Organization"]
         if (args.partner_type == "sponsor"):
-            subj=org_name + " as a SeaGL 2025 Sponsor?"
+            subj=org_name + " as a SeaGL 2026 Sponsor?"
         elif (args.partner_type == "partner"):
-            subj=org_name + " as a SeaGL 2025 Partner?"
+            subj=org_name + " as a SeaGL 2026 Partner?"
         elif (args.partner_type == "reminder"):
-            subj="Checking in about " + org_name + " as a SeaGL 2025 Partner?"
+            subj="Checking in about " + org_name + " as a SeaGL 2026 Partner?"
         else:
             print ("Warning: partner type incorrectly input or inexistent.")
             print ("Current checks are for..")
