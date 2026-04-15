@@ -88,11 +88,12 @@ with open(args.filename) as csvfile:
         #     template = "./new_local_sponsor_Template.html"
         # else:
         #     template = "./new_sponsor_Template.html"
-        template = "./new_sponsor_Template.html"
+        template = "./unreleased_cfp/new_sponsor_template.html"
+        # template = "./unreleased_cfp/returning_sponsor_template.html"
 
         signature = "./signature_Template.html"
 
-        cc_email="partnerships@seagl.org"
+        cc_email="sponsor@seagl.org"
 
         send_template_email(
             template=template,
