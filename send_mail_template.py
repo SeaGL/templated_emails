@@ -41,11 +41,12 @@ def send_email(to_email, subj, cc, body, signature):
     html_message['Subject'] = subj
     html_message['From'] = SENDER_EMAIL
     html_message['To'] = to_email
-    html_message['Cc'] = "partnerships@seagl.org"
+    html_message['Cc'] = cc
+    recipients = [to_email] + [cc]
 
     with smtplib.SMTP_SSL('mail.seagl.org', 465) as server:
         server.login(SENDER_EMAIL, SENDER_PASSWORD)
-        server.sendmail(SENDER_EMAIL, to_email, html_message.as_string())
+        server.sendmail(SENDER_EMAIL, recipients, html_message.as_string())
 
     print("Email going to " + to_email + " has sent.")
 
@@ -87,7 +88,7 @@ with open(args.filename) as csvfile:
         #     template = "./new_local_sponsor_Template.html"
         # else:
         #     template = "./new_sponsor_Template.html"
-        template = "./keynote_reminder_Template.html"
+        template = "./new_sponsor_Template.html"
 
         signature = "./signature_Template.html"
 
